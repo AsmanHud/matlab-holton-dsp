@@ -73,3 +73,29 @@ u(n)       %  0 0 1 1 1
 ```
 
 [^2]: At the time of writing this, I was using Matlab R2023a, and before R2024a, you must had to define local functions at the end of the file. That's why you see a test case first, then the function definition, which looks odd to me
+
+#### Use of the unit step as a switch
+We can use the unit step function to "switch on" or "switch off" another function x[n]:
+```
+y[n] = x[n]u[n] = x[n] if n >= 0 else 0
+```
+In Matlab:
+```matlab
+u = @(n) double(n >= 0);
+
+x = -2:2        % -2 -1 0 1 2
+y = x .* u(x)   %  0  0 0 1 2
+```
+
+## Systems
+
+### Shift
+There is a trick to perform the shift operation in Matlab, as shifting might mean padding the array with zeros on either side, depending on the sign of the shift:
+```matlab
+x = [-1 2 0 5 3];
+n = 1;
+y = [zeros(1, n) x zeros(1, -n)]
+y
+%    0    -1     2     0     5     3
+```
+When we pass a negative argument to zeros(), it just returns an empty array, so we can dynamically pad the left or the right of the sequence with zeros based on the sign of shift.
