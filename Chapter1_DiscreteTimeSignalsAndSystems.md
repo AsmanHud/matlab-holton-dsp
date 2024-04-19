@@ -99,3 +99,20 @@ y
 %    0    -1     2     0     5     3
 ```
 When we pass a negative argument to zeros(), it just returns an empty array, so we can dynamically pad the left or the right of the sequence with zeros based on the sign of shift.
+
+### Cumsum (cumulative sum)
+In Matlab, we can use the cumsum() built-in function to find the cumsum sequence:
+```matlab
+x = [-1 5 2 -8 4 1 5];
+y = cumsum(x)
+%  -1   4   6  -2   2   3   8
+```
+Or alternatively we could have used a for loop approach:
+```matlab
+y = zeros(1, length(x));
+y(1) = x(1);
+for i = 1:length(x)-1
+    y(i+1) = y(i)+x(i+1);
+end
+% y  =  -1   4   6  -2   2   3   8
+```
